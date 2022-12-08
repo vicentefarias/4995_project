@@ -161,6 +161,7 @@ int main() {
             break;
         case '5':
             img = homograph_perspective(img);
+            img.show();
             break;
         case '6':
             img = get_centre_of_mass(img);
@@ -174,8 +175,9 @@ int main() {
         case '9':
             img = grayscale(img);
             break;
-
         case '0':
+            img.show();
+        case 'x':
             break;
 
         default:
