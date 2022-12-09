@@ -59,7 +59,7 @@ public:
     }
 
     Video grayscale(){
-        cv::VideoWriter output("videos/grayscale.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
+        cv::VideoWriter output("grayscale.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         cv::Mat frame;
         std::cout << "Saving Grayscale Video..." << std::endl;
         while(capture.read(frame)){
@@ -74,13 +74,13 @@ public:
             output.write(ret);
         }
         output.release();
-        return Video("videos/grayscale.avi"); 
+        return Video("grayscale.avi"); 
     }
         
 
 
     Video edge_detect(const int lower_threshold, const int upper_threshold)  {
-        cv::VideoWriter output("videos/edge_detection_video.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
+        cv::VideoWriter output("edge_detection_video.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         cv::Mat frame;
         std::cout << "Saving Edge Detection Video..." << std::endl;
         while(capture.read(frame)){
@@ -95,7 +95,7 @@ public:
             output.write(ret);
         }
         output.release();
-        return Video("videos/edge_detection_video.avi"); 
+        return Video("edge_detection_video.avi"); 
     }
 
     Video gaussian_blur(const int kernel_sz)  {
@@ -118,7 +118,7 @@ public:
             output.write(ret);
         }
         output.release();
-        return Video("videos/gaussian_blur.avi"); 
+        return Video("gaussian_blur.avi"); 
     }
 
 private:
@@ -218,6 +218,7 @@ public:
         box = cv::selectROI(frame, false);
         cv::rectangle(frame, box, cv::Scalar(255, 0, 0), 2, 1);
         imshow("Tracker Frame 1", frame);
+        cv::destroyWindow("Tracker Frame 1");
         tracker->init(frame, box);
 
         cv::VideoWriter output("videos/tracker.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
