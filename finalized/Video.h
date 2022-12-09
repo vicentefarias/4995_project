@@ -49,7 +49,7 @@ public:
     
 //implement save     
     Video saveAs(const std::string& filename="save.avi"){
-        std::cout << "Saving Video..." << std::endl;
+        std::cout << "Saving Video..." << "\n";
         cv::VideoWriter output(filename, cv::VideoWriter::fourcc('M','J','P','G'), 0, cv::Size(cap_width,cap_height));
         cv::Mat frame;
         while(capture.read(frame)){
@@ -62,7 +62,7 @@ public:
     Video grayscale(){
         cv::VideoWriter output("grayscale.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         cv::Mat frame;
-        std::cout << "Saving Grayscale Video..." << std::endl;
+        std::cout << "Saving Grayscale Video..." << "\n";
         while(capture.read(frame)){
             cv::Mat ret;
             cv::cvtColor(frame, ret, cv::COLOR_BGR2GRAY);
@@ -84,7 +84,7 @@ public:
     Video edge_detect(const int lower_threshold, const int upper_threshold)  {
         cv::VideoWriter output("edge_detection_video.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         cv::Mat frame;
-        std::cout << "Saving Edge Detection Video..." << std::endl;
+        std::cout << "Saving Edge Detection Video..." << "\n";
         while(capture.read(frame)){
             cv::Mat ret;
             cv::Canny(frame, ret, lower_threshold, upper_threshold);
@@ -108,7 +108,7 @@ public:
 
         cv::VideoWriter output("gaussian_blur.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         cv::Mat frame;
-        std::cout << "Saving Blurred Video..." << std::endl;
+        std::cout << "Saving Blurred Video..." << "\n";
         while(capture.read(frame)){
             cv::Mat ret;
             cv::GaussianBlur(frame, ret, cv::Size(kernel_sz, kernel_sz), 0);
@@ -166,7 +166,7 @@ public:
 
         cv::VideoWriter output("create_homography.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         cv::Mat frame;
-        std::cout << "Saving Perspective Shifted Video..." << std::endl;
+        std::cout << "Saving Perspective Shifted Video..." << "\n";
         while(capture.read(frame)){
             cv::Mat ret;
             cv::warpPerspective(frame, ret, h, frame.size());
@@ -193,7 +193,7 @@ public:
 
         cv::VideoWriter output("threshold.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         cv::Mat frame;
-        std::cout << "Saving Thresholded Video..." << std::endl;
+        std::cout << "Saving Thresholded Video..." << "\n";
         while(capture.read(frame)){
             cv::Mat gray_frame;
             cv::cvtColor(frame, gray_frame, cv::COLOR_BGR2GRAY);
@@ -232,7 +232,7 @@ public:
         int frame_count = 0;
         int total_frames = 0;
         float fps = -1;
-        std::cout << "Saving Tracked Video..." << std::endl;
+        std::cout << "Saving Tracked Video..." << "\n";
         while(capture.read(frame)){
 
             frame_count++;
@@ -397,7 +397,7 @@ public:
         
         cv::Mat frame;
         capture.read(frame);
-        std::cout << "Saving Detected Video..." << std::endl;
+        std::cout << "Saving Detected Video..." << "\n";
         while(capture.read(frame)){
 
             frame_count++;
