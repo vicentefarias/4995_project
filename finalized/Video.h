@@ -43,6 +43,7 @@ public:
                 std::cout << "finished by user\n";
                 break;
             }
+            cv::destroyWindow(filename);
         }  
     }
     
@@ -74,6 +75,7 @@ public:
             output.write(ret);
         }
         output.release();
+        cv::destroyWindow("Grayscale");
         return Video("grayscale.avi"); 
     }
         
@@ -95,6 +97,7 @@ public:
             output.write(ret);
         }
         output.release();
+        cv::destroyWindow("Edge Detection");
         return Video("edge_detection_video.avi"); 
     }
 
@@ -103,7 +106,7 @@ public:
         debug_assert(kernel_sz > 1, "Kernel size must be greater than 1");
         debug_assert(kernel_sz < 1000, "Kernel size must be less than 1000");
 
-        cv::VideoWriter output("videos/gaussian_blur.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
+        cv::VideoWriter output("gaussian_blur.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         cv::Mat frame;
         std::cout << "Saving Blurred Video..." << std::endl;
         while(capture.read(frame)){
@@ -117,6 +120,7 @@ public:
             }
             output.write(ret);
         }
+        cv::destroyWindow("Gaussian Blurring");
         output.release();
         return Video("gaussian_blur.avi"); 
     }
@@ -160,7 +164,7 @@ public:
         };
         cv::Mat h = cv::findHomography(points, dst_points);
 
-        cv::VideoWriter output("videos/create_homography.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
+        cv::VideoWriter output("create_homography.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         cv::Mat frame;
         std::cout << "Saving Perspective Shifted Video..." << std::endl;
         while(capture.read(frame)){
@@ -173,10 +177,11 @@ public:
                 std::cout << "finished by user\n";
                 break;
             }
+            cv::destroyWindow("Shifting Perspective");
             output.write(ret);
         }
         output.release();
-        return Video("videos/create_homography.avi"); 
+        return Video("create_homography.avi"); 
 
     }
 
@@ -186,7 +191,7 @@ public:
         debug_assert(value >= 0, "Threshold value must be non-negative");
         debug_assert(value < 256, "Threshold value must be less than 256");
 
-        cv::VideoWriter output("videos/threshold.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
+        cv::VideoWriter output("threshold.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         cv::Mat frame;
         std::cout << "Saving Thresholded Video..." << std::endl;
         while(capture.read(frame)){
@@ -194,7 +199,7 @@ public:
             cv::cvtColor(frame, gray_frame, cv::COLOR_BGR2GRAY);
             cv::Mat ret;
             cv::threshold(gray_frame, ret, value, 255, type);
-            cv::imshow("Video Tresholding", ret);
+            cv::imshow("Video Thresholding", ret);
             if (cv::waitKey(1) != -1){
                 capture.release();
                 output.release();
@@ -203,8 +208,9 @@ public:
             }
             output.write(ret);
         }
+        cv::destroyWindow("Video Thresholding");
         output.release();
-        return Video("videos/threshold.avi"); 
+        return Video("threshold.avi"); 
 
     } 
 
@@ -221,7 +227,7 @@ public:
         cv::destroyWindow("Tracker Frame 1");
         tracker->init(frame, box);
 
-        cv::VideoWriter output("videos/tracker.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
+        cv::VideoWriter output("tracker.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         auto start = std::chrono::high_resolution_clock::now();
         int frame_count = 0;
         int total_frames = 0;
@@ -259,8 +265,9 @@ public:
             }
             output.write(frame);
         }
+         cv::destroyWindow("Tracking");
         output.release();
-        return Video("videos/tracker.avi"); 
+        return Video("tracker.avi"); 
 
     }
 
@@ -382,7 +389,7 @@ public:
         std::vector<std::string> label = Video::loadClassifications();
         cv::dnn::Net net = Video::loadDNN();
 
-        cv::VideoWriter output("videos/detect.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
+        cv::VideoWriter output("detect.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30, cv::Size(cap_width,cap_height));
         auto start = std::chrono::high_resolution_clock::now();
         int frame_count = 0;
         int total_frames = 0;
@@ -404,7 +411,7 @@ public:
 
             Video::putDetection(detections, frame, label); 
 
-            imshow("Tracking", frame);
+            imshow("Detection", frame);
 
             if (cv::waitKey(1) != -1){
                 output.release();
@@ -414,8 +421,9 @@ public:
             }
             output.write(frame);
         }
+        cv::destroyWindow("Detection");
         output.release();
-        return Video("videos/detect.avi"); 
+        return Video("detect.avi"); 
 
     }
   
